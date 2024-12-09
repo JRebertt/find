@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import axios from 'axios'
 
 const API_KEY = 'sk_01je1kxxankvry5ab2c195k10n01je1kxxanceg78ssd884j6wde'
 const API_URL = 'https://api.wiseapi.io/v1/cpf'
@@ -20,7 +20,7 @@ export interface WiseApiCpfResponse {
       CPF: string
       NOME: string
       VINCULO: string
-    }[] // Incluindo parentes
+    }[]
   }
 }
 
@@ -33,17 +33,17 @@ export async function fetchCpfFromWiseApi(
   cpf: string,
 ): Promise<WiseApiCpfResponse> {
   try {
-    const response = await fetch(`${API_URL}/${cpf}`, {
+    const response = await axios.get(`${API_URL}/${cpf}`, {
       headers: {
         'x-wise-key': API_KEY,
       },
     })
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error(`WiseAPI error: ${response.statusText}`)
     }
 
-    const data = (await response.json()) as WiseApiCpfResponse
+    const data = response.data as WiseApiCpfResponse
     return data
   } catch (error) {
     if (error instanceof Error) {
