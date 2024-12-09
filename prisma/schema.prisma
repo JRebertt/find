@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum para Tipo de Token
+enum TokenType {
+  DEVICE
+  ACCESS
+}
+
+// Enum para Tipo de Consulta
+enum QueryType {
+  CPF
+  CNPJ
+  CEP
+}
+
+// Modelo para Usuários
+model User {
+  id        String   @id @default(uuid())
+  name      String? // Nome do usuário
+  createdAt DateTime @default(now()) // Data de criação
+  updatedAt DateTime @updatedAt // Última atualização
+
+  deviceTokens DeviceToken[]
+  queryLogs    QueryLog[]
+}
+
+// Modelo para Tokens de Dispositivos
+model DeviceToken {
+  id        String    @id @default(uuid())
+  type      TokenType @default(DEVICE)
+  isActive  Boolean   @default(true)
+  value     String    @unique
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+  metadata  Json?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
+
+// Modelo para Dados Armazenados em Cache
+model CachedData {
+  id         String     @id @default(uuid())
+  queryType  QueryType
+  queryValue String
+  name       String?
+  cpf        String?    @unique
+  birthdate  DateTime?
+  nomeMae    String?
+  nomePai    String?
+  renda      String?
+  telefones  String[] // Array de strings para armazenar múltiplos telefones
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  QueryLog   QueryLog[]
+
+  @@unique([queryType, queryValue]) // Garante unicidade para cada tipo e valor de consulta
+  @@index([queryType, queryValue]) // Índice para acelerar buscas por tipo e valor
+  @@map("cached_data")
+}
+
+// Modelo para Logs de Consultas
+model QueryLog {
+  id           String    @id @default(uuid())
+  queryType    QueryType
+  queryValue   String
+  isCacheHit   Boolean
+  responseTime Int
+  createdAt    DateTime  @default(now())
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId String?
+
+  cachedData   CachedData? @relation(fields: [cachedDataId], references: [id], onDelete: SetNull)
+  cachedDataId String?
+}
+
+model QueryStatistics {
+  id         String      @id @default(uuid())
+  queryType  QueryType
+  queryValue String
+  source     QuerySource
+  createdAt  DateTime    @default(now())
+
+  @@index([queryType, queryValue])
+}
+
+enum QuerySource {
+  CACHE
+  API
+}
