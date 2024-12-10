@@ -46,7 +46,7 @@ importers:
         version: 5.0.0
       fastify-type-provider-zod:
         specifier: ^4.0.2
-        version: 4.0.2(fastify@5.1.0)(zod@3.23.8)
+        version: 4.0.2(fastify@5.1.0)(zod@3.24.0)
       tsc:
         specifier: ^2.0.4
         version: 2.0.4
@@ -55,7 +55,7 @@ importers:
         version: 8.3.5(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)
       zod:
         specifier: ^3.23.8
-        version: 3.23.8
+        version: 3.24.0
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -1308,8 +1308,8 @@ packages:
     peerDependencies:
       zod: ^3.23.3
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@3.24.0:
+    resolution: {integrity: sha512-Hz+wiY8yD0VLA2k/+nsg2Abez674dDGTai33SwNvMPuf9uIrBC9eFgIMQxBBbHFxVXi8W+5nX9DcAh9YNSQm/w==}
 
 snapshots:
 
@@ -1905,12 +1905,12 @@ snapshots:
       raw-body: 3.0.0
       secure-json-parse: 2.7.0
 
-  fastify-type-provider-zod@4.0.2(fastify@5.1.0)(zod@3.23.8):
+  fastify-type-provider-zod@4.0.2(fastify@5.1.0)(zod@3.24.0):
     dependencies:
       '@fastify/error': 4.0.0
       fastify: 5.1.0
-      zod: 3.23.8
-      zod-to-json-schema: 3.23.5(zod@3.23.8)
+      zod: 3.24.0
+      zod-to-json-schema: 3.23.5(zod@3.24.0)
 
   fastify@5.1.0:
     dependencies:
@@ -2396,8 +2396,8 @@ snapshots:
 
   yaml@2.6.1: {}
 
-  zod-to-json-schema@3.23.5(zod@3.23.8):
+  zod-to-json-schema@3.23.5(zod@3.24.0):
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.0
 
-  zod@3.23.8: {}
+  zod@3.24.0: {}
