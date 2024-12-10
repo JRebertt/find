@@ -22,10 +22,7 @@ app.setValidatorCompiler(validatorCompiler)
 app.setErrorHandler(errorHandler)
 
 // Plugins
-app.register(fastifyCors, {
-  origin: true,
-  credentials: true,
-})
+app.register(fastifyCors)
 app.register(rawBodyPlugin)
 app.register(swaggerPlugin)
 app.register(jwtPlugin)
