@@ -1,17 +1,6 @@
 version: '3.8'
-services:
-  api:
-    build: .
-    container_name: find-person-api
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=postgresql://docker:docker@pg:5432/finddb
-    ports:
-      - "3000:3000"
-    depends_on:
-      - pg
 
-  pg:
+pg:
     image: bitnami/postgresql:latest
     container_name: find-person-db
     ports:
@@ -21,5 +10,3 @@ services:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=finddb
 
-volumes:
-  pgdata:
