@@ -1,6 +1,7 @@
+import { env } from '@/env'
 import axios from 'axios'
 
-const API_KEY = 'sk_01je1kxxankvry5ab2c195k10n01je1kxxanceg78ssd884j6wde'
+const API_KEY = env.WISEAPI_SK
 const API_URL = 'https://api.wiseapi.io/v1/cpf'
 
 export interface WiseApiCpfResponse {
