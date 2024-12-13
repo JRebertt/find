@@ -69,7 +69,7 @@ export async function queryCpf(app: FastifyInstance) {
       const externalResponse: WiseApiCpfResponse =
         await fetchCpfFromWiseApi(cpf)
 
-      // Processa os dados recebidos da API
+      // Process the data received from the API
       const rawBirthdate = externalResponse.data.DADOS_PESSOAIS.DATA_NASCIMENTO
       const validBirthdate =
         rawBirthdate && /^\d{2}\/\d{2}\/\d{4}$/.test(rawBirthdate)
@@ -87,9 +87,11 @@ export async function queryCpf(app: FastifyInstance) {
         telefones: externalResponse.data.TELEFONES.map(
           (tel: { TELEFONE: string }) => tel.TELEFONE,
         ),
+        atividade_principal: [], // Empty array for CPF query
+        atividades_secundarias: [], // Empty array for CPF query
       }
 
-      // Salva no cache
+      // Save to cache
       cachedData = await prisma.cachedData.create({
         data: {
           queryType: 'CPF',
@@ -101,6 +103,8 @@ export async function queryCpf(app: FastifyInstance) {
           nomePai: processedData.nomePai,
           renda: processedData.renda,
           telefones: processedData.telefones,
+          atividade_principal: processedData.atividade_principal,
+          atividades_secundarias: processedData.atividades_secundarias,
         },
       })
 

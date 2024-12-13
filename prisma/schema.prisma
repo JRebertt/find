@@ -47,23 +47,40 @@ model DeviceToken {
 
 // Modelo para Dados Armazenados em Cache
 model CachedData {
-  id         String     @id @default(uuid())
-  queryType  QueryType
-  queryValue String
-  name       String?
-  cpf        String?    @unique
-  birthdate  DateTime?
-  nomeMae    String?
-  nomePai    String?
-  renda      String?
-  telefones  String[] // Array de strings para armazenar múltiplos telefones
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  QueryLog   QueryLog[]
+  id                     String     @id @default(uuid())
+  queryType              QueryType
+  queryValue             String
+  name                   String?
+  cpf                    String?    @unique
+  cnpj                   String?    @unique
+  plate                  String?    @unique
+  birthdate              DateTime?
+  nomeMae                String?
+  nomePai                String?
+  renda                  String?
+  telefones              String[] // Array de strings para armazenar múltiplos telefones
+  abertura               String?
+  natureza_juridica      String?
+  logradouro             String?
+  numero                 String?
+  complemento            String?
+  bairro                 String?
+  cep                    String?
+  municipio              String?
+  uf                     String?
+  telefone               String?
+  email                  String?
+  situacao               String?
+  data_situacao          String?
+  capital_social         String?
+  atividade_principal    Json // Armazena objetos como JSON
+  atividades_secundarias Json // Armazena objetos como JSON
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
+  QueryLog               QueryLog[]
 
-  @@unique([queryType, queryValue]) // Garante unicidade para cada tipo e valor de consulta
-  @@index([queryType, queryValue]) // Índice para acelerar buscas por tipo e valor
-  @@map("cached_data")
+  @@unique([queryType, queryValue])
+  @@index([queryType, queryValue])
 }
 
 // Modelo para Logs de Consultas
